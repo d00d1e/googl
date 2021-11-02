@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Search from "./Search";
+
 export default function Navbar({ darkTheme, setDarkTheme }) {
   return (
     <div className="p-5 pb-0 flex flex-wrap sm:justify-between justify-center items-center border-b dark:border-gray-700 border-gray-200">
@@ -9,7 +11,7 @@ export default function Navbar({ darkTheme, setDarkTheme }) {
           <p className="text-2xl font-bold text-white py-1 px-2 dark:bg-gray-500 dark:text-gray-900">
             <span className="bg-green-500 px-1">G</span>
             <span className="bg-blue-500 px-1">o</span>
-            <span className="bg-yellow-300 px-1">o</span>
+            <span className="bg-yellow-300 px-1">O</span>
             <span className="bg-red-600 px-1">g</span>
             <span className="bg-green-500 px-1">L</span>
           </p>
@@ -22,6 +24,7 @@ export default function Navbar({ darkTheme, setDarkTheme }) {
           {darkTheme ? "Light 💡" : "Dark 🌙"}
         </button>
       </div>
+      <Search />
     </div>
   );
 }
