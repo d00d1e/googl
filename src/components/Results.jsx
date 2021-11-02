@@ -6,12 +6,18 @@ import { useStateContext } from "../contexts/Context";
 import Loading from "./Loading";
 
 export default function Results() {
-  const { results, searchTerm, isLoading, getResults } = useStateContext();
+  const { results, searchQuery, isLoading, getResults } = useStateContext();
   const location = useLocation();
 
   useEffect(() => {
-    getResults("/search/q=elon+musk&num=100");
-  }, []);
+    if (searchQuery) {
+      if (location.pathname === "/videos") {
+        getResults(`/search/q=${searchQuery} videos`);
+      } else {
+        getResults(`${location.pathname}/q=${searchQuery}&num=40`);
+      }
+    }
+  }, [location.pathname, searchQuery]);
 
   if (isLoading) return <Loading />;
 
@@ -36,7 +42,24 @@ export default function Results() {
     case "/news":
       return "NEWS";
     case "/images":
-      return "IMAGES";
+      return (
+        <div className="flex flex-wrap justify-center items-center">
+          {results?.image_results?.map(
+            ({ image, link: { href, title } }, index) => (
+              <a
+                href={href}
+                key={index}
+                className="sm:p-3 p-5"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <img src={image?.src} alt={title} loading="lazy" />
+                <p className="w-36 break-words text-sm mt-2">{title}</p>
+              </a>
+            )
+          )}
+        </div>
+      );
     case "/vidoes":
       return "VIDEOS";
     default:
