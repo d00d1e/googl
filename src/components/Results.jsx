@@ -35,7 +35,7 @@ export default function Results() {
                   {title}
                 </p>
                 <p className="text-sm text-gray-500">
-                  {description.substring(0, 100)}...
+                  {description?.substring(0, 100)}...
                 </p>
               </a>
             </div>
@@ -89,7 +89,7 @@ export default function Results() {
           {results.map((video, index) => (
             <div key={index} className="p-2 ">
               <ReactPlayer
-                url={video.additional_links[0].href}
+                url={video.additional_links?.[0].href}
                 width="355"
                 height="200"
                 controls
@@ -99,6 +99,6 @@ export default function Results() {
         </div>
       );
     default:
-      return "ERROR!";
+      return "No Results!";
   }
 }
