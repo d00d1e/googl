@@ -5,7 +5,7 @@ const links = [
   { url: "/search", text: "🔍 All" },
   { url: "/news", text: "📰 News" },
   { url: "/images", text: "📸 Images" },
-  { url: "/videos", text: "🎥 Vidoes" },
+  { url: "/videos", text: "📺 Videos" },
 ];
 
 export default function Links() {

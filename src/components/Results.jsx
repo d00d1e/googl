@@ -45,9 +45,10 @@ export default function Results() {
     case "/news":
       return (
         <div className="flex flex-wrap justify-between space-y-6 sm:px-56 items-center">
-          {results?.map(({ links, id, source, title }) => (
-            <div key={id} className="md:w-2/5 w-full">
+          {results?.map(({ links, id, source, title }, index) => (
+            <div key={index} className="md:w-2/5 w-full">
               <a
+                key={id}
                 href={links?.[0].href}
                 target="_blank"
                 rel="noreferrer"
@@ -58,7 +59,12 @@ export default function Results() {
                 </p>
               </a>
               <div className="flex gap-4">
-                <a href={source?.href} target="_blank" rel="noreferrer">
+                <a
+                  key={index}
+                  href={source?.href}
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   {source?.href}
                 </a>
               </div>
@@ -88,12 +94,14 @@ export default function Results() {
         <div className="flex flex-wrap justify-center">
           {results.map((video, index) => (
             <div key={index} className="p-2 ">
-              <ReactPlayer
-                url={video.additional_links?.[0].href}
-                width="355"
-                height="200"
-                controls
-              />
+              {video?.additional_links?.[0]?.href && (
+                <ReactPlayer
+                  url={video.additional_links?.[0].href}
+                  width="355"
+                  height="200"
+                  controls
+                />
+              )}
             </div>
           ))}
         </div>
