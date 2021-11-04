@@ -26,24 +26,21 @@ export default function Results() {
     case "/search":
       return (
         <div className="justify-between space-y-6 sm:px-28 ml-20">
-          {results?.map(
-            ({ link, title, description }, index) =>
-              (
-                <div key={index} className="sm:w-full md:max-w-lg">
-                  <a href={link} className="text-sm">
-                    <p className="text-sm">
-                      {link.length > 30 ? link.substring(0, 50) + "..." : link}
-                    </p>
-                  </a>
-                  <p className="text-lg hover:underline dark:text-blue-300 text-blue-700 mt-1 mb-1">
-                    {title}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {description?.substring(0, 200)}...
-                  </p>
-                </div>
-              )``
-          )}
+          {results?.map(({ link, title, description }, index) => (
+            <div key={index} className="sm:w-full md:max-w-lg">
+              <a href={link} className="text-sm">
+                <p className="text-sm">
+                  {link.length > 30 ? link.substring(0, 50) + "..." : link}
+                </p>
+              </a>
+              <p className="text-lg hover:underline dark:text-blue-300 text-blue-700 mt-1 mb-1">
+                {title}
+              </p>
+              <p className="text-sm text-gray-500">
+                {description?.substring(0, 200)}...
+              </p>
+            </div>
+          ))}
         </div>
       );
     case "/news":
