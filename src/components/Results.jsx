@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ReactPlayer from "react-player";
+import ReactHtmlParser from "react-html-parser";
 
 import { useStateContext } from "../contexts/Context";
 import Loading from "./Loading";
@@ -24,52 +25,58 @@ export default function Results() {
   switch (location.pathname) {
     case "/search":
       return (
-        <div className="flex flex-wrap justify-between space-y-6 sm:px-48">
-          {results?.map(({ link, title, description }, index) => (
-            <div key={index} className="w-full">
-              <a href={link} target="_blank" rel="noreferrer">
-                <p className="text-sm">
-                  {link.length > 30 ? link.substring(0, 30) : link}
-                </p>
-                <p className="text-lg hover:underline dark:text-blue-300 text-blue-700">
-                  {title}
-                </p>
-                <p className="text-sm text-gray-500">
-                  {description?.substring(0, 100)}...
-                </p>
-              </a>
-            </div>
-          ))}
+        <div className="justify-between space-y-6 sm:px-28 ml-20">
+          {results?.map(
+            ({ link, title, description }, index) =>
+              (
+                <div key={index} className="sm:w-full md:max-w-lg">
+                  <a href={link} className="text-sm">
+                    <p className="text-sm">
+                      {link.length > 30 ? link.substring(0, 50) + "..." : link}
+                    </p>
+                  </a>
+                  <p className="text-lg hover:underline dark:text-blue-300 text-blue-700 mt-1 mb-1">
+                    {title}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {description?.substring(0, 200)}...
+                  </p>
+                </div>
+              )``
+          )}
         </div>
       );
     case "/news":
       return (
-        <div className="flex flex-wrap justify-between space-y-6 sm:px-56 items-center">
-          {results?.map(({ links, id, source, title }, index) => (
-            <div key={index} className="md:w-2/5 w-full">
-              <a
-                key={id}
-                href={links?.[0].href}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
+        <div className="justify-between space-y-6 sm:px-28 ml-20">
+          <div className="text-sm text-gray-500">
+            About {results.length} results
+          </div>
+          {results?.map(
+            ({ links, id, source, title, published, summary }, index) => (
+              <div
+                key={index}
+                className="sm:w-full md:max-w-2xl border border-gray-200 rounded-md p-4"
               >
-                <p className="text-lg dark:text-blue-300 text-blue-700">
-                  {title}
-                </p>
-              </a>
-              <div className="flex gap-4">
+                <p className="text-xs text-gray-500 pb-1">{source.title}</p>
                 <a
-                  key={index}
-                  href={source?.href}
-                  target="_blank"
-                  rel="noreferrer"
+                  key={id}
+                  href={links?.[0].href}
+                  className="hover:text-blue-700"
                 >
-                  {source?.href}
+                  <p className="text-lg dark:text-white-300 text-black-700 pb-2">
+                    {title.split(" - ")[0]}
+                  </p>
                 </a>
+                <div className="text-sm text-gray-500 h-16 whitespace-normal">
+                  {ReactHtmlParser(summary)}
+                </div>
+                <p className="text-gray-500 text-sm">
+                  {published?.slice(0, 16)}
+                </p>
               </div>
-            </div>
-          ))}
+            )
+          )}
         </div>
       );
     case "/images":
@@ -83,7 +90,12 @@ export default function Results() {
               target="_blank"
               rel="noreferrer"
             >
-              <img src={image?.src} alt={title} loading="lazy" />
+              <img
+                src={image?.src}
+                alt={title}
+                loading="lazy"
+                className="h-42 w-64 object-contain"
+              />
               <p className="sm:w-36 w-36 break-words text-sm mt-2">{title}</p>
             </a>
           ))}
